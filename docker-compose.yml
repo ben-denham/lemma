@@ -1,0 +1,13 @@
+version: '3.4'
+services:
+  jupyter:
+    image: "${BASE_IMAGE_NAME}-dev"
+    build:
+      context: .
+      target: dev_image
+    ports:
+      - '7777:8888'
+    volumes:
+      - .:/home/jovyan/lemma
+    environment:
+      TZ: Pacific/Auckland

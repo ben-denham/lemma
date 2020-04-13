@@ -1,0 +1,21 @@
+.env
+.pip-packages/
+.ipynb_checkpoints/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Generic
+*~
+
+# Python packaging
+test/coverage
+.coverage
+
+# Testing
+*.egg-info
