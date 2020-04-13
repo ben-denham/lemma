@@ -4,15 +4,16 @@ BASE_IMAGE_NAME=lemma
 env:
 	echo "BASE_IMAGE_NAME=${BASE_IMAGE_NAME}" > .env
 build: env
+	touch .pypirc
 	docker-compose build \
 		--build-arg GROUP_ID=`id -g` \
 		--build-arg USER_ID=`id -u`
 deps: build
-	docker-compose run --rm  --workdir="/home/jovyan" jupyter \
+	docker-compose run --rm --workdir="/home/jovyan" jupyter \
 		pip install --user -e "lemma[dev]"
 clear-build:
 	docker-compose rm
-	docker-compose -f docker-compose.yml -f docker-compose.prod.yml rm
+	docker-compose -f docker-compose.yml rm
 
 # Running the application
 run: deps
@@ -39,3 +40,13 @@ test:
 		--cov="lemma" \
 		--cov-report="html:test/coverage" \
 		--cov-report=term
+
+# Packaging
+package:
+	docker-compose run --rm jupyter \
+		pip install --user --upgrade setuptools wheel twine
+	docker-compose run --rm --workdir="/home/jovyan/lemma" jupyter \
+		python setup.py sdist bdist_wheel
+package-upload: package
+	docker-compose run --rm --workdir="/home/jovyan/lemma" jupyter \
+		python -m twine upload dist/*

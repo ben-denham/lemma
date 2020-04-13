@@ -14,8 +14,11 @@ __pycache__/
 *~
 
 # Python packaging
-test/coverage
-.coverage
+*.egg-info
+.pypirc
+build/
+dist/
 
 # Testing
-*.egg-info
+test/coverage
+.coverage

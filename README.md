@@ -23,7 +23,15 @@ executable and testable Python.
 
 ## Le Quick Start
 
-TODO: Binder
+Try the Demo on Binder:
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ben-denham/lemma/master?filepath=notebooks%2FLemmaDemo.ipynb)
+
+Or get it from PyPi [![PyPI version](https://badge.fury.io/py/lemma.svg)](https://badge.fury.io/py/lemma)
+
+```
+pip install lemma
+```
 
 ## Le Features
 

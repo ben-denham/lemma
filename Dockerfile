@@ -37,3 +37,4 @@ ENV PATH=$PATH:/home/jovyan/lemma/.pip-packages/bin
 RUN touch /home/jovyan/CREATE_FILES_IN_WORK_DIRECTORY__FILES_CREATED_HERE_WILL_BE_LOST
 COPY ./notebooks/jupyter_notebook_config.py /home/jovyan/.jupyter/jupyter_notebook_config.py
 COPY ./notebooks/custom.js /home/jovyan/.jupyter/custom/custom.js
+RUN ln -s /home/jovyan/lemma/.pypirc /home/jovyan/.pypirc
