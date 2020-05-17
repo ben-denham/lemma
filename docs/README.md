@@ -29,8 +29,11 @@ Try the tutorial on Binder:
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ben-denham/lemma/master?filepath=notebooks%2FBasicTutorial.ipynb)
 
-Then check out the rest of the
-[documentation](http://ben-denham.github.io/lemma).
+Then check out:
+
+* [Documentation](http://ben-denham.github.io/lemma).
+* [API reference](https://ben-denham.github.io/lemma/#/lemma.core)
+* [Tutorial on adding your own notation to Lemma](https://mybinder.org/v2/gh/ben-denham/lemma/master?filepath=notebooks%2BExtendingTutorial.ipynb)
 
 ## Le Features
 
