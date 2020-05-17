@@ -50,3 +50,9 @@ package:
 package-upload: package
 	docker-compose run --rm --workdir="/home/jovyan/lemma" jupyter \
 		python -m twine upload dist/*
+
+# Documentation
+update-docs:
+	cp README.md docs/README.md
+serve-docs:
+	docker-compose run -p 3000:3000 --rm --workdir="/home/jovyan/lemma/docs" jupyter python -m http.server 3000
