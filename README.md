@@ -18,21 +18,21 @@
  ##
 ```
 
+[![PyPI version](https://badge.fury.io/py/lemma.svg)](https://badge.fury.io/py/lemma)
+
 An extensible mini-language to generate mathematical notation for
 executable and testable Python.
 
-[![PyPI version](https://badge.fury.io/py/lemma.svg)](https://badge.fury.io/py/lemma)
-
 ## Le Quick Start
 
-Try the tutorial on Binder:
+Follow the tutorial on Binder:
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ben-denham/lemma/master?filepath=notebooks%2FBasicTutorial.ipynb)
 
 Then check out:
 
-* [Documentation](http://ben-denham.github.io/lemma).
-* [API reference](https://ben-denham.github.io/lemma/#/lemma.core)
+* [Le Docs](http://ben-denham.github.io/lemma)
+* [Le API reference](https://ben-denham.github.io/lemma/#/lemma.core)
 * [Tutorial on adding your own notation to Lemma](https://mybinder.org/v2/gh/ben-denham/lemma/master?filepath=notebooks%2BExtendingTutorial.ipynb)
 
 ## Le Features
@@ -87,9 +87,15 @@ Then check out:
 
 ## Le TODO
 
-* Complete `algebra.hy`
-* Improve precedence numbering.
+* Generate `algebra.hy` API doc from docstrings
+  * Add support for defining example arguments for an operator.
 * Commenting and some refactoring
-* Generate docstrings
-* Documentation (tutorial, API reference)
+  * lang.hy
+  * core.hy
+* Documentation
+  * API reference: lemma.core
+  * Installation & Usage
+  * BasicTutorial
+  * ExtendingTutorial
+* Complete `algebra.hy`
 * Unit tests
