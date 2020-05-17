@@ -89,7 +89,7 @@
            ~g!latex-val
            (lemma.lang.LatexString ~g!latex-val
                                    (if (none? ~precedence)
-                                       0
+                                       lemma.lang.BASE-PRECEDENCE
                                        ~precedence))))))
 
 (defmacro expr [form]
@@ -165,12 +165,12 @@
                  (setv (. ~g!equation --doc--) ~doc))
          ~g!equation))))
 
-(defmacro def-equation [symbol &rest args]
+(defmacro def-equation [symbol arglist &rest parts]
   (if (not (isinstance symbol HySymbol))
       (raise (LeSyntaxError "The first argument to def-equation must be a symbol.")))
   `(do
      (require lemma.core)
-     (setv ~symbol (lemma.core.equation ~@args))
+     (setv ~symbol (lemma.core.equation ~arglist ~@parts))
      (setv (. ~symbol name) (name '~symbol))))
 
 (setv OPERATOR-CLAUSES #{'expr 'latex 'latex-macro 'hy 'hy-macro 'precedence})
@@ -183,11 +183,13 @@
   (defn parse-precedence [clause-dict]
     (if (in 'precedence clause-dict)
         (let [precedence-clause (get clause-dict 'precedence)]
-          (if (and (= (len precedence-clause) 1)
-                   (or (isinstance (first precedence-clause) HyFloat)
-                       (isinstance (first precedence-clause) HyInteger)))
-              (eval (first precedence-clause))
-              (raise (LeSyntaxError "Precedence must be a single numeric value."))))
+          (if (not (= (len precedence-clause) 1))
+              (raise (LeSyntaxError "Precedence must be a single numeric value."))
+              (let [precedence (first precedence-clause)]
+                (if (or (isinstance precedence HyFloat)
+                        (isinstance precedence HyInteger))
+                    (eval precedence)
+                    precedence))))
         None))
 
   (defn resolve-hy-code [bindings form]

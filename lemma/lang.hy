@@ -3,7 +3,8 @@
         [hy.models [HyObject HySymbol HyExpression HyList]]
         [hy.contrib.walk [postwalk]]
         [hy.contrib.hy-repr [hy-repr]]
-        [lemma.exceptions [*]])
+        [lemma.exceptions [*]]
+        [lemma.precedence [*]])
 
 ;; Types
 
@@ -13,13 +14,6 @@
     (let [str-obj (.--new-- str cls text)]
       (setv str-obj.precedence precedence)
       str-obj)))
-
-(defclass HyCode []
-  (defn --init-- [self form bindings]
-    (setv self.form form)
-    (setv self.bindings bindings))
-  (defn run [self]
-    (eval self.form self.bindings)))
 
 (defclass LeSyntax []
   (defn --init-- [self]
@@ -104,7 +98,8 @@
     (let [body-latex (if (and (empty? args) (empty? kwargs))
                          (.body-latex self #* self.arg-identifiers)
                          (.body-latex self #* args #** kwargs))]
-      (LatexString (+ (.signature-latex self) " = " body-latex) 0)))
+      (LatexString (+ (.signature-latex self) " = " body-latex)
+                   EQUATION-PRECEDENCE)))
   #@(property
       (defn op [self] LeOperator
         (let [operator (LeOperator self.body-latex self.hy-fn)]
@@ -155,7 +150,7 @@
 
 (defn make-identifier [symbol &optional latex]
   (let [identifier (-> (if (none? latex) (name symbol) latex)
-                       (LatexString 0)
+                       (LatexString BASE-PRECEDENCE)
                        (LeIdentifier symbol))]
     (setv identifier.name (name symbol))
     identifier))
@@ -176,11 +171,8 @@
         paren-args (if (empty? (get arg-grouping-dict :paren))
                        ""
                        (+ r"\left(" (.join "," (get arg-grouping-dict :paren)) r"\right)"))]
-    (LatexString (+ latex-name sub-args super-args paren-args) 0)))
-
-(defn validate-even-bindings! [caller bindings]
-  (when (not (even? (len bindings)))
-    (raise (LeSyntaxError f"An even number of bindings must be supplied to {caller}."))))
+    (LatexString (+ latex-name sub-args super-args paren-args)
+                 BASE-PRECEDENCE)))
 
 (defn operator-application? [form]
   (if (isinstance form HyExpression)
@@ -198,12 +190,6 @@
 
 (defn latex-format-numeric [number]
   (str number))
-
-(defn latex-enclose-arg
-  [max-precedence arg-latex-string]
-  (if (>= arg-latex-string.precedence max-precedence)
-      (LatexString (+ r"\left(" arg-latex-string r"\right)") 0)
-      arg-latex-string))
 
 (defn split-args [args]
   (setv args (list args))
@@ -228,13 +214,14 @@
 
 (setv bare
       (LeOperator
-        (fn [body] (LatexString (gen-latex body) 0))
+        (fn [body] (LatexString (gen-latex body) BASE-PRECEDENCE))
         (fn [body] (gen-hy body))))
 (setv bare.name "bare")
 
 (setv parens
       (LeOperator
-        (fn [body] (LatexString (+ r"\left(" (gen-latex body) r"\right)") 0))
+        (fn [body] (LatexString (+ r"\left(" (gen-latex body) r"\right)")
+                                BASE-PRECEDENCE))
         (fn [body] (gen-hy body))))
 (setv parens.name "parens")
 
@@ -246,6 +233,10 @@
 ;; Evaluators
 
 (defn gen-latex [form]
+  "Takes a Lemma form of Hy data structures and Lemma objects and returns
+  an executable Hy representation. Raises `LeSyntaxError` if the form
+  cannot be interpreted as a Lemma form, and raises `LeRuntimeError` if
+  an exception was raised while generating the Hy code."
   (try
     (cond
       [(isinstance form LeExpression) (gen-latex form.body)]
@@ -256,9 +247,10 @@
          (let [args (split-args (rest form))]
            (.latex-fn (first form) #* (:args args) #** (:kwargs args))))]
       [(isinstance form LeConstant) form.latex-val]
-      [(numeric? form) (LatexString (latex-format-numeric form) 0)]
-      [(symbol? form) (LatexString (str form) 0)]
-      [(listy? form) (LatexString (+ "\{" (.join ", " (map gen-latex form)) "\}") 0 )]
+      [(numeric? form) (LatexString (latex-format-numeric form) BASE-PRECEDENCE)]
+      [(symbol? form) (LatexString (str form) BASE-PRECEDENCE)]
+      [(listy? form) (LatexString (+ "\{" (.join ", " (map gen-latex form)) "\}")
+                                  BASE-PRECEDENCE)]
       [True (raise (LeSyntaxError f"Cannot interpret lemma form {(hy-repr form)}"))])
     (except [ex Exception]
       (if-not (or (isinstance ex LeRuntimeError) (isinstance ex LeSyntaxError))
@@ -266,6 +258,10 @@
               (raise)))))
 
 (defn gen-hy [form]
+  "Takes a Lemma form of Hy data structures and Lemma objects and returns
+  a `LatexString` representation. Raises `LeSyntaxError` if the form
+  cannot be interpreted as a Lemma form, and raises `LeRuntimeError` if
+  an exception was raised while generating the LaTeX."
   (try
     (cond
       [(isinstance form LeExpression) (gen-hy form.body)]
