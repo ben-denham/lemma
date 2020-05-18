@@ -87,8 +87,6 @@ Then check out:
 
 ## Le TODO
 
-* Generate `algebra.hy` API doc from docstrings
-  * Add support for defining example arguments for an operator.
 * Commenting and some refactoring
   * lang.hy
   * core.hy
