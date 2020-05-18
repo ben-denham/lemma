@@ -14,9 +14,9 @@
 (le.def-constant E r"e" math.e
   "Mathematical constant $e$.")
 (le.def-constant PI r"\pi" math.pi
-  "Mathematical constant $\pi$.")
+  r"Mathematical constant $\pi$.")
 (le.def-constant TAU r"\tau" math.tau
-  "Mathematical constant $\tau = 2\pi$.")
+  r"Mathematical constant $\tau = 2\pi$.")
 
 ;; ARITHMETIC
 
@@ -28,7 +28,8 @@
     (->> args
          (map (partial latex-enclose-arg BINARY-OP-PRECEDENCE))
          (.join " + ")))
-  (hy (+ #* args)))
+  (hy (+ #* args))
+  (example-args [x 1 2]))
 
 (le.def-operator sub
   [&rest args]
@@ -41,7 +42,9 @@
              (map (partial latex-enclose-arg BINARY-OP-PRECEDENCE))
              (.join " - "))
         f"-{(first args)}"))
-  (hy (hy.core.shadow.- #* args)))
+  (hy (hy.core.shadow.- #* args))
+  (example-args [x]
+                [x 1 2]))
 
 (le.def-operator mul
   [&rest args]
@@ -49,8 +52,9 @@
   (precedence JUXT-PRECEDENCE)
   (latex (->> args
               (map (partial latex-enclose-arg FUNCTION-CALL-PRECEDENCE))
-              (.join)))
-  (hy (* #* args)))
+              (.join "")))
+  (hy (* #* args))
+  (example-args [x 2 3]))
 
 (le.def-operator mul/times
   [&rest args]
@@ -59,7 +63,8 @@
   (latex (->> args
               (map (partial latex-enclose-arg BINARY-OP-PRECEDENCE))
               (.join r" \times ")))
-  (hy (* #* args)))
+  (hy (* #* args))
+  (example-args [x 2 3]))
 
 (le.def-operator mul/dot
   [&rest args]
@@ -67,24 +72,27 @@
   (precedence BINARY-OP-PRECEDENCE)
   (latex (->> args
               (map (partial latex-enclose-arg BINARY-OP-PRECEDENCE))
-              (.join r" \dot ")))
-  (hy (* #* args)))
+              (.join r" \cdot ")))
+  (hy (* #* args))
+  (example-args [x 2 3]))
 
 (le.def-operator div
   [numerator denominator]
   "Divide the numerator by the denominator (formatted with division sign)."
   (precedence BINARY-OP-PRECEDENCE)
-  (latex (+ (latex-enclose-arg numerator BINARY-OP-PRECEDENCE)
+  (latex (+ (latex-enclose-arg BINARY-OP-PRECEDENCE numerator)
             " \div "
-            (latex-enclose-arg denominator BINARY-OP-PRECEDENCE)))
-  (hy (/ numerator denominator)))
+            (latex-enclose-arg BINARY-OP-PRECEDENCE denominator)))
+  (hy (/ numerator denominator))
+  (example-args [x 2]))
 
 (le.def-operator div/frac
   [numerator denominator]
   "Divide the numerator by the denominator (formatted with division sign)."
   (precedence FRACTION-PRECEDENCE)
   (latex (+ r"\frac{" numerator "}{" denominator "}"))
-  (hy (/ numerator denominator)))
+  (hy (/ numerator denominator))
+  (example-args [x 2]))
 
 (le.def-operator pow
   [value exponent]
@@ -92,7 +100,8 @@
   (precedence EXPONENT-PRECEDENCE)
   (latex (+ (latex-enclose-arg EXPONENT-PRECEDENCE value)
             "^{" exponent "}"))
-  (hy (** value exponent)))
+  (hy (** value exponent))
+  (example-args [x 2]))
 
 ;; ceil
 ;; floor
@@ -110,7 +119,8 @@
   "Returns the length of the given sequence."
   (precedence UNARY-OP-PRECEDENCE)
   (latex f"|{sequence}|")
-  (hy (len sequence)))
+  (hy (len sequence))
+  (example-args [[1 2 3]]))
 
 (le.def-operator seq-sum
   [bindings body]
@@ -134,7 +144,8 @@
       (+ r"\sum_{" latex-bindings "} " latex-body)))
   (hy-macro
     (validate-even-bindings! "seq-sum" bindings)
-    `(sum (lfor ~@(map gen-hy bindings) ~(gen-hy body)))))
+    `(sum (lfor ~@(map gen-hy bindings) ~(gen-hy body))))
+  (example-args [[x [1 2 3] y [4 5 6]] (add x y)]))
 
 (le.def-operator seq-prod
   [bindings body]
@@ -158,7 +169,8 @@
       (+ r"\prod_{" latex-bindings "} " latex-body)))
   (hy-macro
     (validate-even-bindings! "seq-prod" bindings)
-    `(reduce * (lfor ~@(map gen-hy bindings) ~(gen-hy body)))))
+    `(reduce * (lfor ~@(map gen-hy bindings) ~(gen-hy body))))
+  (example-args [[x [1 2 3] y [4 5 6]] (add x y)]))
 
 ;; get/sup, get/sub
 ;; map

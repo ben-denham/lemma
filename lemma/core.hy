@@ -101,19 +101,24 @@
   (symbol-arg-check symbol "def-identifier")
   `(do
      (import lemma.lang)
+     (import lemma.docmd)
      (setv ~symbol (lemma.lang.make-identifier '~symbol ~latex))
+     (setv (. ~symbol name) (name '~symbol))
      (if-not (none? ~doc)
-             (setv (. ~symbol --doc--) ~doc))))
+             (setv (. ~symbol --doc--) ~doc))
+     (setv (. ~symbol _docmd) (lemma.docmd.identifier-docmd ~symbol))))
 
 (defmacro def-constant [symbol latex value &optional doc]
   (symbol-arg-check symbol "def-constant")
   `(do
      (require lemma.core)
      (import lemma.lang)
+     (import lemma.docmd)
      (setv ~symbol (lemma.lang.LeConstant (lemma.core.latexstr ~latex) ~value))
      (setv (. ~symbol name) (name '~symbol))
      (if-not (none? ~doc)
-             (setv (. ~symbol --doc--) ~doc))))
+             (setv (. ~symbol --doc--) ~doc))
+     (setv (. ~symbol _docmd) (lemma.docmd.constant-docmd ~symbol '~value))))
 
 (defmacro def-formula [symbol latex-name arglist &rest parts]
   (symbol-arg-check symbol "def-formula")
@@ -137,9 +142,10 @@
                  (fn ~(:arglist args)
                    (.bind body-expr ~(:bindings args)))
                  ~latex-name ~(:identifiers args) ~(:groups args))))
+       (setv (. ~symbol name) (name '~symbol))
        (if-not (none? ~doc)
                (setv (. ~symbol --doc--) ~doc))
-       (setv (. ~symbol name) (name '~symbol)))))
+       (setv (. ~symbol _docmd) (lemma.docmd.formula-docmd ~symbol '~arglist)))))
 
 (defmacro/g! equation [arglist &rest parts]
   (setv [doc parts] (capture-docstring parts))
@@ -173,7 +179,8 @@
      (setv ~symbol (lemma.core.equation ~arglist ~@parts))
      (setv (. ~symbol name) (name '~symbol))))
 
-(setv OPERATOR-CLAUSES #{'expr 'latex 'latex-macro 'hy 'hy-macro 'precedence})
+(setv OPERATOR-CLAUSES #{'expr 'latex 'latex-macro 'hy 'hy-macro
+                         'precedence 'example-args})
 (setv EXCLUSIVE-OPERATOR-CLAUSE-SETS
       {:latex #{'expr 'latex 'latex-macro}
        :hy #{'expr 'hy 'hy-macro}})
@@ -289,8 +296,19 @@
         (if (in 'expr clause-dict)
             (expr-operator-definition args clause-dict)
             (funcs-operator-definition args clause-dict)))
+  (setv example-expressions
+        (if (in 'example-args clause-dict)
+            (->> (get clause-dict 'example-args)
+                 (map (fn [args] `(~symbol ~@args)))
+                 (map (fn [form] `['~form (lemma.core.expr ~form)]))
+                 (list))
+            []))
   `(do
+     (import lemma.docmd)
+     (require lemma.core)
      (setv ~symbol ~operator-definition)
      (if-not (none? ~doc)
              (setv (. ~symbol --doc--) ~doc))
-     (setv (. ~symbol name) (name '~symbol))))
+     (setv (. ~symbol name) (name '~symbol))
+     (setv (. ~symbol _docmd) (lemma.docmd.operator-docmd ~symbol '~arglist
+                                                          ~example-expressions))))

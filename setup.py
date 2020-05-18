@@ -51,5 +51,10 @@ setup(
             'pytest>=5.2.2',
             'pytest-cov>=2.8.1',
         ]
-    }
+    },
+    entry_points={
+        'console_scripts': [
+            'lemmadoc = lemma.cmdline:lemmadoc_main',
+        ]
+    },
 )
