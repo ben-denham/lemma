@@ -5,23 +5,35 @@ Constants and operators for basic algebra in Lemma.
 
 ## Constant: `E`
 
-Mathematical constant $e$.
-
-Value: `math.e`
+Mathematical constant $e$.<table>
+  <tr>
+    <td>E</td>
+    <td>$e$</td>
+    <td>`math.e` (`2.718281828459045`)</td>
+  </tr>
+</table>
 
 
 ## Constant: `PI`
 
-Mathematical constant $\pi$.
-
-Value: `math.pi`
+Mathematical constant $\pi$.<table>
+  <tr>
+    <td>PI</td>
+    <td>$\pi$</td>
+    <td>`math.pi` (`3.141592653589793`)</td>
+  </tr>
+</table>
 
 
 ## Constant: `TAU`
 
-Mathematical constant $\tau = 2\pi$.
-
-Value: `math.tau`
+Mathematical constant $\tau = 2\pi$.<table>
+  <tr>
+    <td>TAU</td>
+    <td>$\tau$</td>
+    <td>`math.tau` (`6.283185307179586`)</td>
+  </tr>
+</table>
 
 
 ## Operator: `add`
