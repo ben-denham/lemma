@@ -278,7 +278,7 @@
 
 (defn latex-format-numeric [number]
   "Return a LatexString representing the given number."
-  (LatexString (str number) BASE-PRECEDENCE))
+  (LatexString (str number) NUMERIC-PRECEDENCE))
 
 (defn split-args [op args]
   "Given the raw (i.e. syntax) of the arguments for a Lemma operator,

@@ -50,11 +50,19 @@
   [&rest args]
   "Multiply the given arguments (formatted as a juxt-position)."
   (precedence JUXT-PRECEDENCE)
-  (latex (->> args
-              (map (partial latex-enclose-arg FUNCTION-CALL-PRECEDENCE))
-              (.join "")))
+  (latex
+    (let [;; The precedence of each arg must be lower than the
+          ;; previous arg (e.g. to prevent 2 numerics in a row), and
+          ;; all must be below UNARY-OP-PRECEDENCE.
+          max-precedences (+ [UNARY-OP-PRECEDENCE]
+                             (->> args
+                                  (drop-last 1)
+                                  (map (fn [arg] (min UNARY-OP-PRECEDENCE arg.precedence)))
+                                  (list)))]
+      (.join "" (map latex-enclose-arg max-precedences args))))
   (hy (* #* args))
-  (example-args [x 2 3]))
+  (example-args [x 2 3]
+                [2 x]))
 
 (le.def-operator mul/times
   [&rest args]
