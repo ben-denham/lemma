@@ -60,7 +60,11 @@
         title (+ "## " type-name ": `" obj-name "`")
         signature (if (none? arglist)
                       ""
-                      (+ "\n\n```scheme\n(" obj-name " " (.join " " arglist) ")\n```"))
+                      (+ "\n\n```scheme\n(" obj-name " "
+                         (.join " " (map
+                                      (fn [item] (.lstrip (hy-repr item) "'"))
+                                      arglist))
+                         ")\n```"))
         docstring (if (hasattr obj "__doc__")
                       f"\n\n{(cleandoc (. obj --doc--))}"
                       "")]

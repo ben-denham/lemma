@@ -87,9 +87,6 @@ Then check out:
 
 ## Le TODO
 
-* Commenting and some refactoring
-  * lang.hy
-  * core.hy
 * Documentation
   * API reference: lemma.core
   * Installation & Usage

@@ -43,6 +43,8 @@ higher-level constructs (formulae, equations, etc.).
 
 ### LeExpression
 
+### Tag Operators
+
 ## latexstr
 
 `(latexstr latex &optional [precedence None])`
