@@ -55,6 +55,6 @@ package-upload: package
 update-docs:
 	cp README.md docs/README.md
 	docker-compose run --rm --workdir="/home/jovyan/lemma" jupyter \
-		lemmadoc lemma.algebra > docs/lemma.algebra.md
+		lemmadoc lemma.domain.algebra > docs/lemma.domain.algebra.md
 serve-docs:
 	docker-compose run -p 3000:3000 --rm --workdir="/home/jovyan/lemma/docs" jupyter python -m http.server 3000

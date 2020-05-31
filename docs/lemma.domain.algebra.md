@@ -1,4 +1,4 @@
-# lemma.algebra
+# lemma.domain.algebra
 
 Constants and operators for basic algebra in Lemma.
 
