@@ -90,7 +90,7 @@
     "Evaluate and return the expression's Hy value."
     (eval (.hy self)))
   (defn --repr-- [self]
-    (+ "LeExpression#" (hy-repr self.body))))
+    (+ "LeExpression#" (.lstrip (hy-repr self.body) "'"))))
 
 (defclass LeOperator [LeSyntax]
   "Lemma syntax object for an operation that accepts arguments and can be

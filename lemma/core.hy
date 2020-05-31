@@ -128,13 +128,13 @@
     ;; Format groups of args.
     (let [sub-args (if (empty? (get arg-grouping-dict :sub))
                        ""
-                       (+ "_{" (.join "," (get arg-grouping-dict :sub)) "}"))
+                       (+ "_{" (.join ", " (get arg-grouping-dict :sub)) "}"))
           super-args (if (empty? (get arg-grouping-dict :super))
                          ""
-                         (+ "^{" (.join "," (get arg-grouping-dict :super)) "}"))
+                         (+ "^{" (.join ", " (get arg-grouping-dict :super)) "}"))
           paren-args (if (empty? (get arg-grouping-dict :paren))
                          ""
-                         (+ r"\left(" (.join "," (get arg-grouping-dict :paren)) r"\right)"))]
+                         (+ r"\left(" (.join ", " (get arg-grouping-dict :paren)) r"\right)"))]
       ;; Generate final LatexString.
       (LatexString (+ latex-name sub-args super-args paren-args)
                    FUNCTION-CALL-PRECEDENCE))))

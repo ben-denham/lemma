@@ -75,9 +75,8 @@
 
 (defn constant-docmd [constant value-hy]
   (+ (base-docmd "Constant" constant)
-     (html-table [[(. constant name)
-                   (+ "$" (.latex constant) "$")
-                   (+ "`" (.lstrip (hy-repr value-hy) "'") "` (`" (str (constant)) "`)")]])))
+     (html-table [[(+ "`" (.lstrip (hy-repr value-hy) "'") "` (`" (str (constant)) "`)")
+                   (+ "$" (.latex constant) "$")]])))
 
 (defn formula-docmd [formula arglist]
   (+ (base-docmd "Formula" formula arglist)
