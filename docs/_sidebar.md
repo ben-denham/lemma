@@ -5,3 +5,4 @@
   * [`lemma.domain.algebra`](lemma.domain.algebra.md)
   * [`lemma.utils`](lemma.utils.md)
   * [`lemma.precedence`](lemma.precedence.md)
+* [Contributing](contributing.md)
