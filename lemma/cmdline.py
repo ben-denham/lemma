@@ -1,5 +1,5 @@
 import argparse
-import hy
+import hy  # noqa: F401
 
 from lemma.docmd import module_docmd
 

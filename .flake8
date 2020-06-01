@@ -1,0 +1,9 @@
+[flake8]
+ignore = E501
+exclude =
+    .git,
+    __pycache__,
+    .pip-packages,
+    build,
+    dist,
+    notebooks/jupyter_notebook_config.py

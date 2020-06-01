@@ -16,6 +16,7 @@ class Install(install):
         self.__compile_hy_bytecode()
         return install.run(self)
 
+
 setup(
     name='lemma',
     version='0.1dev',
@@ -26,7 +27,7 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/ben-denham/lemma',
     packages=find_packages(exclude=['test']),
-     package_data={
+    package_data={
         'lemma': ['*.hy'],
     },
     classifiers=[
