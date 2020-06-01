@@ -1,15 +1,15 @@
 # lemma.domain.algebra
 
-Constants and operators for basic algebra in Lemma.
+This module provides constants and operators for expressing basic
+algebra in Lemma.
 
 
 ## Constant: `E`
 
 Mathematical constant $e$.<table>
   <tr>
-    <td>E</td>
-    <td>$e$</td>
     <td>`math.e` (`2.718281828459045`)</td>
+    <td>$e$</td>
   </tr>
 </table>
 
@@ -18,9 +18,8 @@ Mathematical constant $e$.<table>
 
 Mathematical constant $\pi$.<table>
   <tr>
-    <td>PI</td>
-    <td>$\pi$</td>
     <td>`math.pi` (`3.141592653589793`)</td>
+    <td>$\pi$</td>
   </tr>
 </table>
 
@@ -29,9 +28,8 @@ Mathematical constant $\pi$.<table>
 
 Mathematical constant $\tau = 2\pi$.<table>
   <tr>
-    <td>TAU</td>
-    <td>$\tau$</td>
     <td>`math.tau` (`6.283185307179586`)</td>
+    <td>$\tau$</td>
   </tr>
 </table>
 
@@ -44,9 +42,11 @@ Mathematical constant $\tau = 2\pi$.<table>
 
 Add the given arguments.
 
+*Callable: Supports direct usage from Hy/Python code.*
+
 <table>
   <tr>
-    <td><pre><code class="language-scheme">(add x 1 2)</code></pre></td>
+    <td><code class="language-scheme">(add x 1 2)</code></td>
     <td>$x + 1 + 2$</td>
   </tr>
 </table>
@@ -61,13 +61,15 @@ Add the given arguments.
 Subtract, from the first argument, all remaining arguments. If only one
 argument is provided, return its negation.
 
+*Callable: Supports direct usage from Hy/Python code.*
+
 <table>
   <tr>
-    <td><pre><code class="language-scheme">(sub x)</code></pre></td>
+    <td><code class="language-scheme">(sub x)</code></td>
     <td>$-x$</td>
   </tr>
   <tr>
-    <td><pre><code class="language-scheme">(sub x 1 2)</code></pre></td>
+    <td><code class="language-scheme">(sub x 1 2)</code></td>
     <td>$x - 1 - 2$</td>
   </tr>
 </table>
@@ -81,10 +83,16 @@ argument is provided, return its negation.
 
 Multiply the given arguments (formatted as a juxt-position).
 
+*Callable: Supports direct usage from Hy/Python code.*
+
 <table>
   <tr>
-    <td><pre><code class="language-scheme">(mul x 2 3)</code></pre></td>
-    <td>$x23$</td>
+    <td><code class="language-scheme">(mul x 2 3)</code></td>
+    <td>$x\left(2\right)\left(3\right)$</td>
+  </tr>
+  <tr>
+    <td><code class="language-scheme">(mul 2 x)</code></td>
+    <td>$2x$</td>
   </tr>
 </table>
 
@@ -97,9 +105,11 @@ Multiply the given arguments (formatted as a juxt-position).
 
 Multiply the given arguments (formatted with times sign).
 
+*Callable: Supports direct usage from Hy/Python code.*
+
 <table>
   <tr>
-    <td><pre><code class="language-scheme">(mul/times x 2 3)</code></pre></td>
+    <td><code class="language-scheme">(mul/times x 2 3)</code></td>
     <td>$x \times 2 \times 3$</td>
   </tr>
 </table>
@@ -113,9 +123,11 @@ Multiply the given arguments (formatted with times sign).
 
 Multiply the given arguments (formatted with dot).
 
+*Callable: Supports direct usage from Hy/Python code.*
+
 <table>
   <tr>
-    <td><pre><code class="language-scheme">(mul/dot x 2 3)</code></pre></td>
+    <td><code class="language-scheme">(mul/dot x 2 3)</code></td>
     <td>$x \cdot 2 \cdot 3$</td>
   </tr>
 </table>
@@ -129,9 +141,11 @@ Multiply the given arguments (formatted with dot).
 
 Divide the numerator by the denominator (formatted with division sign).
 
+*Callable: Supports direct usage from Hy/Python code.*
+
 <table>
   <tr>
-    <td><pre><code class="language-scheme">(div x 2)</code></pre></td>
+    <td><code class="language-scheme">(div x 2)</code></td>
     <td>$x \div 2$</td>
   </tr>
 </table>
@@ -145,9 +159,11 @@ Divide the numerator by the denominator (formatted with division sign).
 
 Divide the numerator by the denominator (formatted with division sign).
 
+*Callable: Supports direct usage from Hy/Python code.*
+
 <table>
   <tr>
-    <td><pre><code class="language-scheme">(div/frac x 2)</code></pre></td>
+    <td><code class="language-scheme">(div/frac x 2)</code></td>
     <td>$\frac{x}{2}$</td>
   </tr>
 </table>
@@ -161,9 +177,11 @@ Divide the numerator by the denominator (formatted with division sign).
 
 Raise value to the given exponent.
 
+*Callable: Supports direct usage from Hy/Python code.*
+
 <table>
   <tr>
-    <td><pre><code class="language-scheme">(pow x 2)</code></pre></td>
+    <td><code class="language-scheme">(pow x 2)</code></td>
     <td>$x^{2}$</td>
   </tr>
 </table>
@@ -177,9 +195,11 @@ Raise value to the given exponent.
 
 Returns the length of the given sequence.
 
+*Callable: Supports direct usage from Hy/Python code.*
+
 <table>
   <tr>
-    <td><pre><code class="language-scheme">(length [1 2 3])</code></pre></td>
+    <td><code class="language-scheme">(length [1 2 3])</code></td>
     <td>$|\{1, 2, 3\}|$</td>
   </tr>
 </table>
@@ -196,7 +216,7 @@ arguments specified by bindings.
 
 <table>
   <tr>
-    <td><pre><code class="language-scheme">(seq-sum [x [1 2 3] y [4 5 6]] (add x y))</code></pre></td>
+    <td><code class="language-scheme">(seq-sum [x [1 2 3] y [4 5 6]] (add x y))</code></td>
     <td>$\sum_{x \in \{1, 2, 3\}, y \in \{4, 5, 6\}} x + y$</td>
   </tr>
 </table>
@@ -213,7 +233,7 @@ arguments specified by bindings.
 
 <table>
   <tr>
-    <td><pre><code class="language-scheme">(seq-prod [x [1 2 3] y [4 5 6]] (add x y))</code></pre></td>
+    <td><code class="language-scheme">(seq-prod [x [1 2 3] y [4 5 6]] (add x y))</code></td>
     <td>$\prod_{x \in \{1, 2, 3\}, y \in \{4, 5, 6\}} x + y$</td>
   </tr>
 </table>

@@ -7,6 +7,15 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="vendor/buble.css">
     <style>
+     .markdown-section h1 > a,
+     .markdown-section h2 > a {
+         text-decoration: underline;
+         color: #34495e;
+     }
+     .markdown-section h1 > a:hover,
+     .markdown-section h2 > a:hover {
+         color: var(--theme-color, #0074d9);
+     }
      .markdown-section pre {
          padding-bottom: 0;
      }

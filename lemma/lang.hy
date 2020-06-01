@@ -35,7 +35,7 @@
     (.--init-- (super))
     (setv self.latex-val latex-val)
     (setv self.hy-val hy-val))
-  (defn latex [self]
+  (defn latex [self] LatexString
     "Return a `LatexString` representing the constant."
     (gen-latex self))
   (defn hy [self]
@@ -56,7 +56,7 @@
   (defn --init-- [self ^HyObject body]
     (.--init-- (super))
     (setv self.body body))
-  (defn bind [self ^(of Mapping str Any) bindings]
+  (defn bind [self ^(of Mapping str Any) bindings] LeExpression
     "Replace symbols and identifiers in the expression's
      body form with objects in bindings (a mapping of
      symbol/identifier names to replacement objects)."
@@ -80,7 +80,7 @@
                 subform))
             subform))
         self.body)))
-  (defn latex [self]
+  (defn latex [self] LatexString
     "Return a `LatexString` representing the expression."
     (gen-latex self))
   (defn hy [self]
@@ -102,18 +102,23 @@
     (.--init-- (super))
     (setv self.latex-fn latex-fn)
     (setv self.hy-fn hy-fn)
-    (setv self.arg-identifiers arg-identifiers))
-  (defn latex [self &rest args &kwargs kwargs]
+    (setv self.arg-identifiers arg-identifiers)))
+
+(defclass LeCallableOperator [LeOperator]
+  "A callable operator can be used directly (outside of a Lemma
+   form/expression), because it's arguments can be passed by value (they don't
+   have to be passed as raw forms/syntax)."
+  (defn latex [self &rest args &kwargs kwargs] LatexString
     "Return a `LatexString` representing the operator applied to the given args."
-    (.latex self  #* args #** kwargs))
+    (.latex self #* args #** kwargs))
   (defn hy [self &rest args &kwargs kwargs]
     "Return a Hy form representing the operator applied to the given args."""
-    (.hy-fn self  #* args #** kwargs))
+    (.hy-fn self #* args #** kwargs))
   (defn --call-- [self &rest args &kwargs kwargs]
     "Apply operator to given arguments and return the evaluated Hy value."
     (eval (.hy self #* args #** kwargs))))
 
-(defclass LeFormula [LeOperator]
+(defclass LeFormula [LeCallableOperator]
   "Lemma syntax object that acts as an operator by evaluating a Lemma
    expression with provided arguments, but is formatted in LaTeX as a
    function-call/signature, instead of the full expression of its body
@@ -130,21 +135,21 @@
                  (gen-hy (expr-fn #* args #** kwargs)))
                :arg-identifiers arg-identifiers)
     (setv self.expr-fn expr-fn))
-  (defn body-latex [self &rest args &kwargs kwargs]
+  (defn body-latex [self &rest args &kwargs kwargs] LatexString
     "Return a `LatexString` representing the body of this
      Formula using the given args.
      If no args are supplied, format with parameter names."
     (if (and (empty? args) (empty? kwargs))
         (gen-latex (.expr-fn self #* self.arg-identifiers))
         (gen-latex (.expr-fn self #* args #** kwargs))))
-  (defn signature-latex [self &rest args &kwargs kwargs]
+  (defn signature-latex [self &rest args &kwargs kwargs] LatexString
     "Return a `LatexString` representing the signature of this
      Formula using the given args.
      If no args are supplied, format with parameter names."
     (if (and (empty? args) (empty? kwargs))
         (.latex-fn self #* self.arg-identifiers)
         (.latex-fn self #* args #** kwargs)))
-  (defn latex [self &rest args &kwargs kwargs]
+  (defn latex [self &rest args &kwargs kwargs] LatexString
     "Return a `LatexString` representing the equation of this Formula's
      signature to it's body using the given args.
      If no args are supplied, format with parameter names."
@@ -152,14 +157,14 @@
                     (.body-latex self #* args #** kwargs))
                  EQUATION-PRECEDENCE))
   #@(property
-      (defn op [self] LeOperator
+      (defn op [self] LeCallableOperator
         "Return a simple operator represented by the body expression
          of this formula."
-        (let [operator (LeOperator self.body-latex self.hy-fn self.arg-identifiers)]
+        (let [operator (LeCallableOperator self.body-latex self.hy-fn self.arg-identifiers)]
           (setv operator.name (+ self.name ".op"))
           operator))))
 
-(defclass LeEquation [LeOperator]
+(defclass LeEquation [LeCallableOperator]
   "Lemma syntax object that acts as an operator representing a set of equivalent
    expressions that can be evaluated with the same arguments. Formatted in LaTeX
    expressions as the first expression, and can be formatted as a series of
@@ -206,12 +211,12 @@
                                      "]: result '" (str ~g/exp-result)
                                      "' of " ~g/exp-repr
                                      " did not equal result '" (str (first ~g/exp-results))
-                                     "' of " (first ~g/exp-repr))))))
+                                     "' of " ~g/exp-repr)))))
                ;; Return the first result.
                (first ~g/exp-results)))))
       :arg-identifiers arg-identifiers)
     (setv self.expressions-fn expressions-fn))
-  (defn latex [self &rest args &kwargs kwargs]
+  (defn latex [self &rest args &kwargs kwargs] LatexString
     "Return a `LatexString` representing this equation evaluated with the given
      args. If no args are supplied, format with parameter names."
     (let [expressions (if (and (empty? args) (empty? kwargs))
@@ -222,7 +227,8 @@
                       (map (partial latex-enclose-arg EQUATION-PRECEDENCE))
                       (list))]
       (LatexString (+ r"\begin{aligned} "
-                      (first latexs) " &= "
+                      (first latexs)
+                      (if (> (len latexs) 1) " &= " "")
                       (.join r" \\&= " (rest latexs))
                       r"\end{aligned}")
                    EQUATION-PRECEDENCE))))

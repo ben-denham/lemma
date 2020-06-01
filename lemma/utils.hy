@@ -1,4 +1,5 @@
-"Utilities that are helpful when extending the notation of Lemma."
+"Utility functions that are helpful when constructing your own Lemma
+operators with `lemma.core.def-operator`."
 
 (import [lemma.lang [gen-hy gen-latex latex-enclose-arg]]
         [lemma.exceptions [LeSyntaxError]])

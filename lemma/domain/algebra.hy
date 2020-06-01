@@ -1,4 +1,5 @@
-"Constants and operators for basic algebra in Lemma."
+"This module provides constants and operators for expressing basic
+algebra in Lemma."
 
 (require [hy.contrib.walk [let]])
 (require [lemma.core :as le])
@@ -53,11 +54,15 @@
   (latex
     (let [;; The precedence of each arg must be lower than the
           ;; previous arg (e.g. to prevent 2 numerics in a row), and
-          ;; all must be below UNARY-OP-PRECEDENCE.
+          ;; all must be below UNARY-OP-PRECEDENCE. Don't set a max
+          ;; precedence below numeric though (parens should be placed
+          ;; side-by-side).
           max-precedences (+ [UNARY-OP-PRECEDENCE]
                              (->> args
                                   (drop-last 1)
-                                  (map (fn [arg] (min UNARY-OP-PRECEDENCE arg.precedence)))
+                                  (map (fn [arg]
+                                         (max (min UNARY-OP-PRECEDENCE arg.precedence)
+                                              NUMERIC-PRECEDENCE)))
                                   (list)))]
       (.join "" (map latex-enclose-arg max-precedences args))))
   (hy (* #* args))

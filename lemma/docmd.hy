@@ -4,7 +4,8 @@
 (import [hy.contrib.hy-repr [hy-repr]]
         [hy.lex [hy-parse]]
         [importlib [import-module]]
-        [inspect [cleandoc getsource]])
+        [inspect [cleandoc getsource]]
+        [lemma.lang [LeCallableOperator]])
 
 (setv DOCUMENTABLE-DEFS #{"def-identifier" "def-constant"
                           "def-equation" "def-formula"
@@ -38,7 +39,7 @@
                    (map (fn [obj] (. obj _docmd))))))))
 
 (defn html-codeblock [code &optional [lang "scheme"]]
-  f"<pre><code class=\"language-{lang}\">{code}</code></pre>")
+  f"<code class=\"language-{lang}\">{code}</code>")
 
 (defn html-table [rows]
   (+ "<table>\n"
@@ -88,6 +89,10 @@
 
 (defn operator-docmd [operator arglist example-expressions]
   (+ (base-docmd "Operator" operator arglist)
+     ;; Callable?
+     (if (isinstance operator LeCallableOperator)
+         "\n\n*Callable: Supports direct usage from Hy/Python code.*"
+         "")
      ;; Table of example expressions.
      (if (empty? example-expressions)
          ""

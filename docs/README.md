@@ -27,13 +27,13 @@ executable and testable Python.
 
 Follow the tutorial on Binder:
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ben-denham/lemma/master?filepath=notebooks%2FBasicTutorial.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ben-denham/lemma/master?filepath=notebooks%2FTutorial.ipynb)
 
 Then check out:
 
 * [Le Docs](http://ben-denham.github.io/lemma)
+* [Le Installation Guide](http://ben-denham.github.io/lemma/#/installation)
 * [Le API reference](https://ben-denham.github.io/lemma/#/lemma.core)
-* [Tutorial on adding your own notation to Lemma](https://mybinder.org/v2/gh/ben-denham/lemma/master?filepath=notebooks%2BExtendingTutorial.ipynb)
 
 ## Le Features
 
@@ -88,9 +88,7 @@ Then check out:
 ## Le TODO
 
 * Documentation
-  * API reference: lemma.core
   * Installation & Usage
-  * BasicTutorial
-  * ExtendingTutorial
+  * Tutorial
 * Complete `algebra.hy`
 * Unit tests
