@@ -38,7 +38,7 @@ test:
 	docker-compose run --rm --workdir="/home/jovyan/lemma" jupyter \
 		pytest \
 		--cov="lemma" \
-		--cov-report="html:test/coverage" \
+		--cov-report="html:tests/coverage" \
 		--cov-report=term
 
 # Packaging
