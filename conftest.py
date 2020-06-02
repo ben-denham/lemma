@@ -1,0 +1,8 @@
+import hy
+from _pytest.python import Module
+
+
+def pytest_collect_file(path, parent):
+    """Load .hy test modules."""
+    if path.ext == ".hy" and "test_" in path.basename:
+        return Module.from_parent(parent, fspath=path)

@@ -50,7 +50,6 @@ setup(
         'dev': [
             'flake8>=3.7.9',
             'pytest>=5.2.2',
-            'pytest-cov>=2.8.1',
         ]
     },
     entry_points={

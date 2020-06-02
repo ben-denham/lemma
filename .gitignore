@@ -20,5 +20,4 @@ build/
 dist/
 
 # Testing
-tests/coverage
 .coverage

@@ -35,11 +35,7 @@ run-sudo-bash:
 lint:
 	docker-compose run --rm --workdir="/home/jovyan/lemma" jupyter flake8 .
 test:
-	docker-compose run --rm --workdir="/home/jovyan/lemma" jupyter \
-		pytest \
-		--cov="lemma" \
-		--cov-report="html:tests/coverage" \
-		--cov-report=term
+	docker-compose run --rm --workdir="/home/jovyan/lemma" jupyter pytest --cov="lemma"
 
 # Packaging
 package:
