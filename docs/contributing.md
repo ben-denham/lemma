@@ -13,6 +13,13 @@ If you like Lemma, there are lots of ways you can contribute:
   even better a [pull
   request](https://github.com/ben-denham/lemma/pulls)) for a feature
   you'd like to see added.
+* Add a new domain to Lemma, with operators, constants, and formulas
+  covering some field of mathematics. Some ideas:
+  * Set theory with Python sets.
+  * Linear algebra with numpy.
+  * Calculus, perhaps using the
+    [SymPy](https://docs.sympy.org/latest/index.html) symbolic
+    computation library as a foundation.
 
 ## Development Environmnt
 

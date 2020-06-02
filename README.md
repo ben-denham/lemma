@@ -90,5 +90,5 @@ Then check out:
 * Documentation
   * Installation & Usage
   * Tutorial
-* Complete `algebra.hy`
-* Unit tests
+* Add more operators to `algebra.hy`
+* Add unit tests
