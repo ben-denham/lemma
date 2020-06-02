@@ -154,6 +154,15 @@
      ;; expr is built.
      (.bind (lemma.lang.LeExpression '~form) (globals))))
 
+(defmacro exprs [&rest forms]
+  "Return a list of Lemma expressions for the given Lemma forms."
+  (let [expr-forms (->> forms
+                        (map (fn [form] `(lemma.core.expr ~form)))
+                        (list))]
+   `(do
+      (require lemma.core)
+      ~expr-forms)))
+
 (defmacro def-identifier [symbol latex &optional doc]
   "Assign a Lemma identifier to symbol with the given latex
    representation (with optional doc string)."

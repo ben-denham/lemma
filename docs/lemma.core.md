@@ -100,6 +100,14 @@ mapping):
 (bound-expr) ;; => 8
 ```
 
+You can also generate a list of expressions with the `exprs` macro:
+
+``` scheme
+(exprs
+  (add 1 2)
+  (add 3 4))
+```
+
 
 ## Operators
 
