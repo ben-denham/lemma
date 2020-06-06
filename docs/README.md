@@ -87,8 +87,6 @@ Then check out:
 
 ## Le TODO
 
-* Documentation
-  * Installation & Usage
-  * Tutorial
+* Write tutorial
 * Add more operators to `algebra.hy`
 * Add unit tests

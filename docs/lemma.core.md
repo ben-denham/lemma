@@ -247,10 +247,10 @@ placeholder variables in the formatted output:
 
 ### Formula Parameters
 
-Formula parameter lists support all the features of Hy/Python
-functions, including variable argument lengths, optional arguments
-with default values, keyword arguments, and type annotations. For
-syntax and examples, see:
+Formula parameter lists support all the features of Hy functions
+(except `&kwonly` arguments), including variable argument lengths,
+optional arguments with default values, keyword arguments, and type
+annotations. For syntax and examples, see:
 https://docs.hylang.org/en/stable/language/api.html#defn
 
 Lemma also allows you to control whether formula arguments are
@@ -348,10 +348,10 @@ output:
 
 ### Equation Parameters
 
-Equation parameter lists support all the features of Hy/Python
-functions, including variable argument lengths, optional arguments
-with default values, keyword arguments, and type annotations. For
-syntax and examples, see:
+Equation parameter lists support all the features of Hy functions
+(except `&kwonly` arguments), including variable argument lengths,
+optional arguments with default values, keyword arguments, and type
+annotations. For syntax and examples, see:
 https://docs.hylang.org/en/stable/language/api.html#defn
 
 
@@ -447,13 +447,11 @@ clause, it will be a *callable* operator.
 
 ### Operator Parameters
 
-Operator parameter lists support all the features of Hy/Python
-functions, including variable argument lengths, optional arguments
-with default values, keyword arguments, and type annotations. For
-syntax and examples, see:
+Operator parameter lists support all the features of Hy functions
+(except `&kwonly` arguments), including variable argument lengths,
+optional arguments with default values, keyword arguments, and type
+annotations. For syntax and examples, see:
 https://docs.hylang.org/en/stable/language/api.html#defn
-
-### Tips for Defining Operators
 
 * The `lemma.core.latexstr` macro is useful for creating a LatexString
   object with an optionally set precedence:

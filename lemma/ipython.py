@@ -25,7 +25,7 @@ def hy_eval_in_ns(code, ns):
 
 def table_formatter(rows):
     """Format the rows (a list of col/cell lists) as an HTML table string."""
-    row_cells = [''.join([f'<td>{cell}</td>'for cell in row]) for row in rows]
+    row_cells = [''.join([f'<td style="font-size: 14px; padding: 20px;">{cell}</td>'for cell in row]) for row in rows]
     trs = [f'<tr>{cells}</tr>' for cells in row_cells]
     return f'<table class="lemma-table">{"".join(trs)}</table>'
 
