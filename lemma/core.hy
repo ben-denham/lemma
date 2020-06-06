@@ -177,7 +177,7 @@
      (if-not (none? ~doc)
              (setv (. ~symbol --doc--) ~doc))
      ;; Set _docmd.
-     (setv (. ~symbol _docmd) (lemma.docmd.identifier-docmd ~symbol))))
+     (setv (. ~symbol _docmd) (fn [] (lemma.docmd.identifier-docmd ~symbol)))))
 
 (defmacro def-constant [symbol latex value &optional doc]
   "Assign a Lemma constant to symbol with the given latex
@@ -194,7 +194,7 @@
      (if-not (none? ~doc)
              (setv (. ~symbol --doc--) ~doc))
      ;; Set _docmd.
-     (setv (. ~symbol _docmd) (lemma.docmd.constant-docmd ~symbol '~value))))
+     (setv (. ~symbol _docmd) (fn [] (lemma.docmd.constant-docmd ~symbol '~value)))))
 
 (defmacro def-formula [symbol latex-name arglist &rest parts]
   "Assign a Lemma formula to the given symbol with the given latex-name
@@ -234,7 +234,7 @@
        (if-not (none? ~doc)
                (setv (. ~symbol --doc--) ~doc))
        ;; Set _docmd.
-       (setv (. ~symbol _docmd) (lemma.docmd.formula-docmd ~symbol '~arglist)))))
+       (setv (. ~symbol _docmd) (fn [] (lemma.docmd.formula-docmd ~symbol '~arglist))))))
 
 (defmacro/g! equation [arglist &rest parts]
   "Create a Lemma equation for the given arglist (in the format of a Hy function
@@ -277,7 +277,9 @@
      (require lemma.core)
      (setv ~symbol (lemma.core.equation ~arglist ~@parts))
      ;; Set name.
-     (setv (. ~symbol name) (name '~symbol))))
+     (setv (. ~symbol name) (name '~symbol))
+     ;; Set _docmd.
+     (setv (. ~symbol _docmd) (fn [] (lemma.docmd.equation-docmd ~symbol '~arglist)))))
 
 ;; Supported clause names for def-operator.
 (setv OPERATOR-CLAUSES #{'expr 'latex 'latex-macro 'hy 'hy-macro
@@ -496,5 +498,5 @@
      (if-not (none? ~doc)
              (setv (. ~symbol --doc--) ~doc))
      ;; Set _docmd.
-     (setv (. ~symbol _docmd) (lemma.docmd.operator-docmd ~symbol '~arglist
-                                                          ~example-expressions))))
+     (setv (. ~symbol _docmd) (fn [] (lemma.docmd.operator-docmd ~symbol '~arglist
+                                                                 ~example-expressions)))))

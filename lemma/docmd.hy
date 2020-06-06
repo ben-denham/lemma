@@ -36,7 +36,7 @@
                    (map (fn [obj-name] (get (. module --dict--) obj-name)))
                    ;; Get docmd
                    (filter (fn [obj] (hasattr obj "_docmd")))
-                   (map (fn [obj] (. obj _docmd))))))))
+                   (map (fn [obj] (._docmd obj))))))))
 
 (defn html-codeblock [code &optional [lang "scheme"]]
   f"<code class=\"language-{lang}\">{code}</code>")
