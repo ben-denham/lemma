@@ -6,7 +6,7 @@ services:
       context: .
       target: dev_image
     ports:
-      - '7777:8888'
+      - '7777:7777'
     volumes:
       - .:/home/jovyan/lemma
     environment:
