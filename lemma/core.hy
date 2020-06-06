@@ -46,6 +46,9 @@
         (setv current-arg-group arg)
         (let [single-arg (if (pair? arg) (first arg) arg)]
           (if
+            ;; &kwonly unsupported
+            (= single-arg '&kwonly)
+            (raise (LeSyntaxError "&kwonly is not currently supported in Lemma parameter lists."))
             ;; Handle &rest
             (= single-arg '&rest)
             (setv next-is-rest True)

@@ -280,7 +280,9 @@
 
 (defn listy? [form]
   "Return true if the form is a list-like object."
-  (or (list? form) (isinstance form HyList)))
+  (or (list? form)
+      (tuple? form)
+      (isinstance form HyList)))
 
 (defn latex-format-numeric [number]
   "Return a LatexString representing the given number."
