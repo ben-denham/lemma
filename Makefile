@@ -36,6 +36,11 @@ lint:
 	docker-compose run --rm --workdir="/home/jovyan/lemma" jupyter flake8 .
 test:
 	docker-compose run --rm --workdir="/home/jovyan/lemma" jupyter pytest --cov="lemma"
+cache-clear:
+	docker-compose run --rm jupyter \
+		python3 -Bc "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.py[co]')]"
+	docker-compose run --rm jupyter \
+		python3 -Bc "import pathlib; [p.rmdir() for p in pathlib.Path('.').rglob('__pycache__')]"
 
 # Packaging
 package:
