@@ -84,6 +84,9 @@ Then check out:
 * [LaTeXCalc](http://latexcalc.sourceforge.net/doc.php)
   * Interprets and executes LaTeX math notation. Limited library of
     math functions available.
+* [Penrose](http://penrose.ink/)
+  * While Penrose is a math language for generating diagrams, while
+    Lemma generates LaTeX notation and executable code.
 
 ## Le TODO
 
