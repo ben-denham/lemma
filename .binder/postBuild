@@ -4,6 +4,6 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # Set up Jupyter config.
-mv "$DIR/jupyter_notebook_config.py" ~/.jupyter/
 mkdir -p ~/.jupyter/custom
+mv "$DIR/jupyter_notebook_config.py" ~/.jupyter/
 mv "$DIR/custom.js" ~/.jupyter/custom/
