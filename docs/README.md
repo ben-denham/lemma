@@ -23,6 +23,14 @@
 An extensible mini-language to generate mathematical notation for
 executable and testable Python.
 
+**TL;DR:**
+
+1. Write your mathematical formula with Lemma
+2. Execute them from Python code
+3. Output formula definitions in LaTeX maths notation
+4. Ensures your implementation and documentation match
+5. Great for reproducible research and teaching/learning
+
 ## Le Quick Start
 
 Follow the tutorial on Binder:
