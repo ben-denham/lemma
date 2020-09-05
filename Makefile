@@ -44,6 +44,7 @@ cache-clear:
 
 # Packaging
 package:
+	rm -r dist
 	docker-compose run --rm jupyter \
 		pip install --user --upgrade setuptools wheel twine
 	docker-compose run --rm --workdir="/home/jovyan/lemma" jupyter \
