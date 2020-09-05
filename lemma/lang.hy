@@ -6,8 +6,15 @@
         [hy.models [HyObject HySymbol HyExpression HyList]]
         [hy.contrib.walk [postwalk]]
         [hy.contrib.hy-repr [hy-repr]]
+        ;; Explicitly load shadow operators, otherwise they will not
+        ;; always be loaded into globals before (eval) is called.
+        [hy.core.shadow [*]]
         [lemma.exceptions [*]]
         [lemma.precedence [*]])
+
+;; Dereference `-` to trigger globals "magic" that allows - to be
+;; looked up within calls to eval.
+(setv minus -)
 
 ;; Types
 

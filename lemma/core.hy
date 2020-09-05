@@ -1,8 +1,7 @@
 "Core macros for building Lemma definitions and expressions."
 
 (require [hy.contrib.walk [let]])
-(import [hy.models [HyExpression HySymbol HyString HyInteger HyFloat]]
-        [hy.contrib.walk [postwalk macroexpand-all]]
+(import [hy.models [HyExpression HySymbol HyString]]
         [hy.contrib.hy-repr [hy-repr]]
         [lemma.exceptions [*]]
         [lemma.precedence [FUNCTION-CALL-PRECEDENCE]]

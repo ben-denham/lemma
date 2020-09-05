@@ -43,7 +43,7 @@ algebra in Lemma."
              (map (partial latex-enclose-arg BINARY-OP-PRECEDENCE))
              (.join " - "))
         f"-{(first args)}"))
-  (hy (hy.core.shadow.- #* args))
+  (hy (- #* args))
   (example-args [x]
                 [x 1 2]))
 
