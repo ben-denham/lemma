@@ -19,7 +19,7 @@ class Install(install):
 
 setup(
     name='lemma',
-    version='0.1dev',
+    version='1.0',
     author='Ben Denham',
     author_email='ben@denham.nz',
     description='An extensible mini-language to generate mathematical notation for executable and testable Python.',
