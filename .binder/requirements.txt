@@ -1,1 +1,1 @@
-lemma
+lemma==1.0
