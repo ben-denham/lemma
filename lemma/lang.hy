@@ -3,7 +3,7 @@
 (require [hy.contrib.walk [let]])
 (import [functools [partial]]
         [typing [Any Union Callable Sequence Mapping]]
-        [hy.models [HyObject HySymbol HyExpression HyList]]
+        [hy.models [HyObject HySymbol HyExpression HyList HyInteger HyFloat]]
         [hy.contrib.walk [postwalk]]
         [hy.contrib.hy-repr [hy-repr]]
         ;; Explicitly load shadow operators, otherwise they will not
@@ -293,7 +293,11 @@
 
 (defn latex-format-numeric [number]
   "Return a LatexString representing the given number."
-  (LatexString (str number) NUMERIC-PRECEDENCE))
+  (-> (cond [(isinstance number HyInteger) (int number)]
+            [(isinstance number HyFloat) (float number)]
+            [True number])
+      str
+      (LatexString NUMERIC-PRECEDENCE)))
 
 (defn split-args [op args]
   "Given the raw (i.e. syntax) of the arguments for a Lemma operator,
