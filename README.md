@@ -67,7 +67,7 @@ Then check out:
   teaching in domains that depend on both.
 
 ## Le Similar Projects
-
+ 
 * [handcalcs](https://github.com/connorferster/handcalcs)
   * handcalcs has a similar goal of producing LaTeX notation for your
     Python code, but it takes the approach of directly interpreting
@@ -75,6 +75,10 @@ Then check out:
     does not appear to have the same focus on user extensibility (to
     new math domains) and customisability (for fine-grained control of
     generated notation) that Lemma does.
+* [latexify](https://github.com/google/latexify_py)
+  * Likewise, latexify directly compiles a Python function into LaTeX,
+    but it seems to have many of the same limitations in extensibility
+    and customisability as handcalcs.
 * [Mathematica/Wolfram Language](https://www.wolfram.com/language/)
   * The Wolfram Language has similar motivations to Lemma around
     bridging the gap between mathematical notation and executable
